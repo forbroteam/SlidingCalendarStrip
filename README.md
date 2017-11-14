@@ -1,67 +1,67 @@
-# SlidingCalendarStrip
+# SwipeableCalendarStrip
 Easy to use scrollable, horizontal calendar strip component library for Android, written in Kotlin
 
 ## Prerequisites
 The minimum API level supported by this library is **API 17**.
 
 ## Usage
-Add SlidingCalendarView to your layout file:
+Add SwipeableCalendarStripView to your layout file:
 ```xml
-<com.forbroteam.slidingcalendarstrip.SlidingCalendarView
-        android:id="@+id/cv_sliding_calendar"
+<com.forbroteam.calendarstrip.SwipeableCalendarStripView
+        android:id="@+id/cv_calendar_strip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#5a31ac" />
 ```  
 
-Then setup SlidingCalendarView in your Activity or Fragment through its **Builder**:
+Then setup SwipeableCalendarStrip in your Activity or Fragment through its **Builder**:
 
 ### Java
 ```java
-SlidingCalendar calendar = new SlidingCalendar.Builder(view, R.id.cv_sliding_calendar).build();
+SwipeableCalendarStrip calendarStrip = new SwipeableCalendarStrip.Builder(view, R.id.cv_calendar_strip).build();
 ```
 ### Kotlin
 ```kotlin
-val calendar = SlidingCalendar.Builder(view!!, R.id.cv_sliding_calendar).build()
+val calendarStrip = SwipeableCalendarStrip.Builder(view!!, R.id.cv_calendar_strip).build()
 ```
 
 Then set a listener:
 
 ### Java
 ```java
-calendar.setItemSelectionListener(new SlidingCalendarListener() {
+calendarStrip.setItemSelectionListener(new SwipeableCalendarStripListener() {
     @Override
-    public void onSlidingCalendarItemSelected(@NotNull String value, @NotNull String type) {
+    public void onCalendarStripItemSelected(@NotNull String value, @NotNull String type) {
     }
 });
 ```
 ### Kotlin
 ```kotlin
-calendar.itemSelectionListener = object : SlidingCalendarListener {
-            override fun onSlidingCalendarItemSelected(value: String, type: String) {
+calendarStrip.itemSelectionListener = object : SwipeableCalendarStripListener {
+            override fun onCalendarStripItemSelected(value: String, type: String) {
             }
         }
 ```
 
 ## Customization
-You can customize SlidingCalendarView programmatically in your Activity or Fragment through its **Builder**:
+You can customize SwipeableCalendarStripView programmatically in your Activity or Fragment through its **Builder**:
 
 ### Java
 ```java
-SlidingCalendar calendar = new SlidingCalendar.Builder(view, R.id.cv_sliding_calendar)
+SwipeableCalendarStrip calendarStrip = new SwipeableCalendarStrip.Builder(view, R.id.cv_calendar_strip)
                 .itemCount(10) // The total number of items in the component
                 .typeface(...) // Item text font
-                .displayMode(SlidingCalendar.DisplayMode.MONTHS_YEARS) // Date format
+                .displayMode(SwipeableCalendarStrip.DisplayMode.MONTHS_YEARS) // Date format
                 .itemTextSize(...) // Item text size
                 .itemTextColor(...) // Item text color
                 .build();
 ```
 ### Kotlin
 ```kotlin
-val calendar = SlidingCalendar.Builder(view!!, R.id.cv_sliding_calendar)
+val calendarStrip = SwipeableCalendarStrip.Builder(view!!, R.id.cv_calendar_strip)
                 .itemCount(10) // The total number of items in the component
                 .typeface(...) // Item text font
-                .displayMode(SlidingCalendar.DisplayMode.MONTHS_YEARS) // Date format
+                .displayMode(SwipeableCalendarStrip.DisplayMode.MONTHS_YEARS) // Date format
                 .itemTextSize(...) // Item text size
                 .itemTextColor(...) // Item text color
                 .build()
