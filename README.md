@@ -18,7 +18,8 @@ Then setup SwipeableCalendarStrip in your Activity or Fragment through its **Bui
 
 ### Java
 ```java
-SwipeableCalendarStrip calendarStrip = new SwipeableCalendarStrip.Builder(view, R.id.cv_calendar_strip).build();
+SwipeableCalendarStrip calendarStrip = 
+        new SwipeableCalendarStrip.Builder(view, R.id.cv_calendar_strip).build();
 ```
 ### Kotlin
 ```kotlin
@@ -48,7 +49,8 @@ You can customize SwipeableCalendarStripView programmatically in your Activity o
 
 ### Java
 ```java
-SwipeableCalendarStrip calendarStrip = new SwipeableCalendarStrip.Builder(view, R.id.cv_calendar_strip)
+SwipeableCalendarStrip calendarStrip = 
+        new SwipeableCalendarStrip.Builder(view, R.id.cv_calendar_strip)
                 .itemCount(10) // The total number of items in the component
                 .typeface(...) // Item text font
                 .displayMode(SwipeableCalendarStrip.DisplayMode.MONTHS_YEARS) // Date format
