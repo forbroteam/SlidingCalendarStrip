@@ -32,7 +32,7 @@ Then set a listener:
 ```java
 calendarStrip.setItemSelectionListener(new SwipeableCalendarStripListener() {
     @Override
-    public void onCalendarStripItemSelected(@NotNull String value, @NotNull String type) {
+    public void onCalendarStripItemSelected(String value, String type) {
     }
 });
 ```
