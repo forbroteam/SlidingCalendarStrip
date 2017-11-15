@@ -53,6 +53,14 @@ class SwipeableCalendarStripView : LinearLayout, ViewPager.OnPageChangeListener,
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         var height = 0
+        var offsetCoef = when (calendarStrip.itemTextSize) {
+            in 18..24 -> 1.25
+            in 25..29 -> 1.3
+            in 30..35 -> 1.4
+            in 36..40 -> 1.5
+            in 41..100 -> 1.6
+            else -> 1.2
+        }
         for (i in 0 until viewPager.childCount) {
             val child = viewPager.getChildAt(i)
             child.measure(widthMeasureSpec, View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
@@ -65,7 +73,7 @@ class SwipeableCalendarStripView : LinearLayout, ViewPager.OnPageChangeListener,
         super.onMeasure(widthMeasureSpec, heightMeasureSpecNew)
         val w = measuredWidth
 
-        viewPager.pageMargin = ((-w / 1.2).toInt())
+        viewPager.pageMargin = ((-w / offsetCoef).toInt())
     }
 
     fun prepareCalendarStrip(items: LinkedList<CalendarStripItem>) {
