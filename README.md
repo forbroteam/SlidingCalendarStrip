@@ -6,6 +6,19 @@ Easy to use scrollable, horizontal calendar strip component library for Android,
 ## Prerequisites
 The minimum API level supported by this library is **API 17**.
 
+## Installation
+Add the following to your **build.gradle**:
+
+```gradle
+repositories {
+        jcenter()
+}
+    
+dependencies {
+        implementation 'com.forbroteam:swipeable-calendar-strip-view:1.0.0'
+}
+```
+
 ## Usage
 Add SwipeableCalendarStripView to your layout file:
 ```xml
