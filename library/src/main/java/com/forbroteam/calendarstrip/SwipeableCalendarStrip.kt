@@ -15,7 +15,7 @@ import java.util.*
 class SwipeableCalendarStrip(builder: Builder) {
 
     enum class DisplayMode {
-        DAYS, MONTHS, MONTHS_YEARS
+        DAYS, MONTHS, DAYS_MONTHS, MONTHS_YEARS
     }
 
     private var rootView: View
@@ -76,7 +76,7 @@ class SwipeableCalendarStrip(builder: Builder) {
             if (itemCount <= 0) {
                 itemCount = 7
             }
-            displayMode ?: apply { displayMode = DisplayMode.MONTHS }
+            displayMode ?: apply { displayMode = DisplayMode.DAYS_MONTHS }
         }
 
         fun itemCount(itemCount: Int): Builder {
@@ -111,24 +111,23 @@ class SwipeableCalendarStrip(builder: Builder) {
         calendar.time = Date()
 
         when (displayMode) {
-            SwipeableCalendarStrip.DisplayMode.DAYS -> calendar.add(Calendar.DATE, -(itemCount))
+            SwipeableCalendarStrip.DisplayMode.DAYS,
+            SwipeableCalendarStrip.DisplayMode.DAYS_MONTHS -> calendar.add(Calendar.DATE, -(itemCount))
             SwipeableCalendarStrip.DisplayMode.MONTHS,
             SwipeableCalendarStrip.DisplayMode.MONTHS_YEARS -> calendar.add(Calendar.MONTH, -(itemCount))
         }
 
         for (x in 1..itemCount) {
             when (displayMode) {
-                SwipeableCalendarStrip.DisplayMode.DAYS -> {
+                SwipeableCalendarStrip.DisplayMode.DAYS,
+                SwipeableCalendarStrip.DisplayMode.DAYS_MONTHS -> {
                     calendar.add(Calendar.DATE, 1)
-                    itemList.add(CalendarStripItem(SwipeableCalendarStrip.DisplayMode.DAYS, calendar.time))
+                    itemList.add(CalendarStripItem(displayMode!!, calendar.time))
                 }
-                SwipeableCalendarStrip.DisplayMode.MONTHS -> {
-                    calendar.add(Calendar.MONTH, 1)
-                    itemList.add(CalendarStripItem(SwipeableCalendarStrip.DisplayMode.MONTHS, calendar.time))
-                }
+                SwipeableCalendarStrip.DisplayMode.MONTHS,
                 SwipeableCalendarStrip.DisplayMode.MONTHS_YEARS -> {
                     calendar.add(Calendar.MONTH, 1)
-                    itemList.add(CalendarStripItem(SwipeableCalendarStrip.DisplayMode.MONTHS_YEARS, calendar.time))
+                    itemList.add(CalendarStripItem(displayMode!!, calendar.time))
                 }
             }
         }

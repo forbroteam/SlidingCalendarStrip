@@ -14,6 +14,7 @@ data class CalendarStripItem(private val displayMode: SwipeableCalendarStrip.Dis
         return when (displayMode) {
             SwipeableCalendarStrip.DisplayMode.DAYS -> SimpleDateFormat("EEE").format(date)
             SwipeableCalendarStrip.DisplayMode.MONTHS -> SimpleDateFormat("MMM").format(date)
+            SwipeableCalendarStrip.DisplayMode.DAYS_MONTHS -> SimpleDateFormat("dd MMM").format(date)
             SwipeableCalendarStrip.DisplayMode.MONTHS_YEARS -> SimpleDateFormat("MMM yy").format(date)
         }
     }
