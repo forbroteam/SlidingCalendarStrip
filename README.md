@@ -1,6 +1,8 @@
 # SwipeableCalendarStrip
 Easy to use scrollable, horizontal calendar strip component library for Android, written in Kotlin
 
+![screenshot](assets/calendar_strip_view.png)
+
 ## Prerequisites
 The minimum API level supported by this library is **API 17**.
 
