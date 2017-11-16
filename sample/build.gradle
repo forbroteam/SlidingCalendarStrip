@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
 }
 
 dependencies {
@@ -24,8 +27,11 @@ dependencies {
     implementation project(":library")
 
     implementation libs.appcompatV7
+    implementation libs.kotlinStdlib
+    implementation libs.kotlinStdlibJre7
     testImplementation libs.junit
     androidTestImplementation libs.runner
-    androidTestImplementation libs.espressoCore
-    implementation libs.kotlinStdlibJre8
+    androidTestImplementation(libs.espressoCore, {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
 }

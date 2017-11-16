@@ -6,8 +6,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
-        classpath 'com.novoda:bintray-release:0.7.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath 'com.novoda:bintray-release:0.7.0'
     }
 }
 
@@ -16,18 +16,10 @@ allprojects {
         google()
         jcenter()
     }
-
-    tasks.withType(Javadoc).all {
-        enabled = false
-    }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-task javadoc(type: Javadoc) {
-    excludes = ['**/*.kt']
 }
 
 ext {
@@ -37,7 +29,7 @@ ext {
             minSdkVersion    : 17,
             targetSdkVersion : 26,
             versionCode      : 1,
-            versionName      : '1.0.0',
+            versionName      : '1.1.5',
     ]
 
     supportLibraryVersion = '26.1.0'
@@ -55,16 +47,17 @@ ext {
             junit           : "junit:junit:$junitVersion",
             runner          : "com.android.support.test:runner:$runnerVersion",
             espressoCore    : "com.android.support.test.espresso:espresso-core:$espressoCoreVersion",
-            kotlinStdlibJre8: "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion",
+            kotlinStdlib    : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+            kotlinStdlibJre7: "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion",
             ankoCoroutines  : "org.jetbrains.anko:anko-coroutines:$ankoCoroutinesVersion"
     ]
 
     bintray = [
-            repoName : 'maven',
-            artifactId : 'swipeable-calendar-strip-view',
-            userOrg : 'forbroteam',
-            groupId : 'com.forbroteam',
-            uploadName : 'swipeable-calendar-strip-view',
-            publishVersion : '1.0.0',
+            repoName      : 'maven',
+            artifactId    : 'swipeable-calendar-strip-view',
+            userOrg       : 'forbroteam',
+            groupId       : 'com.forbroteam',
+            uploadName    : 'swipeable-calendar-strip-view',
+            publishVersion: configs.versionName,
     ]
 }

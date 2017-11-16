@@ -12,7 +12,7 @@ class SampleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_sample)
-        val calendarStrip = SwipeableCalendarStrip.Builder(window.decorView,
+        val calendarStrip = SwipeableCalendarStrip.Builder(this,
                 R.id.cv_calendar_strip).build()
         calendarStrip.itemSelectionListener = object : SwipeableCalendarStripListener {
             override fun onCalendarStripItemSelected(value: String, type: String) {

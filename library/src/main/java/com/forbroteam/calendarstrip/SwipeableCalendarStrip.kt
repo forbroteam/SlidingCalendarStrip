@@ -1,5 +1,6 @@
 package com.forbroteam.calendarstrip
 
+import android.app.Activity
 import android.graphics.Typeface
 import android.view.View
 import kotlinx.coroutines.experimental.Deferred
@@ -26,7 +27,7 @@ class SwipeableCalendarStrip(builder: Builder) {
     var itemTextColor: Int = 0
     var itemTextSize: Int = 0
     private var displayMode: DisplayMode?
-    lateinit var itemSelectionListener: SwipeableCalendarStripListener
+    var itemSelectionListener: SwipeableCalendarStripListener? = null
 
     init {
         rootView = builder.rootView
@@ -61,6 +62,11 @@ class SwipeableCalendarStrip(builder: Builder) {
 
         constructor(rootView: View, viewId: Int) {
             this.rootView = rootView
+            this.viewId = viewId
+        }
+
+        constructor(activity: Activity, viewId: Int) {
+            this.rootView = activity.window.decorView
             this.viewId = viewId
         }
 
