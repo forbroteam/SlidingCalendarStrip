@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -19,6 +20,7 @@ class SwipeableCalendarStripView : LinearLayout, ViewPager.OnPageChangeListener,
     lateinit var calendarStrip: SwipeableCalendarStrip
     private lateinit var viewPager: ViewPager
     private lateinit var calendarStripAdapter: CalendarStripAdapter
+    private var callbackAvailable = true
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
@@ -80,6 +82,34 @@ class SwipeableCalendarStripView : LinearLayout, ViewPager.OnPageChangeListener,
         initAdapter(items)
     }
 
+    fun moveToPosition(date: Date?,
+                       displayMode: SwipeableCalendarStrip.DisplayMode?, callbackNeeded: Boolean) {
+        callbackAvailable = callbackNeeded
+
+        val position = findPositionByDate(date, displayMode)
+        if (position < 0) return
+
+        viewPager.setCurrentItem(position, false)
+    }
+
+    private fun findPositionByDate(date: Date?,
+                                   displayMode: SwipeableCalendarStrip.DisplayMode?): Int {
+        var dateFormat = SimpleDateFormat("MM/yyyy")
+        when (displayMode) {
+            SwipeableCalendarStrip.DisplayMode.DAYS,
+            SwipeableCalendarStrip.DisplayMode.DAYS_MONTHS -> {
+                dateFormat = SimpleDateFormat("dd/MM/yyyy")
+            }
+        }
+
+        if (calendarStripAdapter == null) return -1
+        return (0..calendarStripAdapter.count).firstOrNull {
+            dateFormat.format(date) == dateFormat
+                    .format(calendarStripAdapter.items[it].getDate())
+        }
+                ?: -1
+    }
+
     private fun initAdapter(items: LinkedList<CalendarStripItem>) {
         calendarStripAdapter = CalendarStripAdapter(context, items,
                 calendarStrip.typeface, calendarStrip.itemTextColor,
@@ -90,14 +120,17 @@ class SwipeableCalendarStripView : LinearLayout, ViewPager.OnPageChangeListener,
     }
 
     override fun onPageScrollStateChanged(state: Int) {
-
+        callbackAvailable = true
     }
 
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-    }
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
     override fun onPageSelected(position: Int) {
+        if (!callbackAvailable) {
+            callbackAvailable = true
+            return
+        }
+
         calendarStrip.itemSelectionListener?.let {
             it.onCalendarStripItemSelected(calendarStripAdapter.items[position].getValue(),
                     calendarStripAdapter.items[position].getType())
@@ -105,6 +138,7 @@ class SwipeableCalendarStripView : LinearLayout, ViewPager.OnPageChangeListener,
     }
 
     override fun onItemClicked(position: Int) {
+        callbackAvailable = true
         viewPager?.setCurrentItem(position, false)
     }
 }

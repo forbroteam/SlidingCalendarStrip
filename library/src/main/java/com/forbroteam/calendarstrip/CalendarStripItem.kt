@@ -8,7 +8,7 @@ import java.util.*
  */
 
 data class CalendarStripItem(private val displayMode: SwipeableCalendarStrip.DisplayMode,
-                               private val date: Date) {
+                             private val date: Date) {
 
     fun getName(): String {
         return when (displayMode) {
@@ -26,4 +26,6 @@ data class CalendarStripItem(private val displayMode: SwipeableCalendarStrip.Dis
     }
 
     fun getType() = displayMode.toString()
+
+    fun getDate() = date
 }

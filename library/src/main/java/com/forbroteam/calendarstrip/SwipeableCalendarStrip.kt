@@ -51,6 +51,10 @@ class SwipeableCalendarStrip(builder: Builder) {
         }
     }
 
+    fun selectItem(date: Date?, callbackNeeded: Boolean) {
+        calendarStripView.moveToPosition(date, displayMode, callbackNeeded)
+    }
+
     class Builder {
         var viewId: Int = 0
         var rootView: View
