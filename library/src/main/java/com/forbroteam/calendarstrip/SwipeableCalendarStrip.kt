@@ -132,12 +132,12 @@ class SwipeableCalendarStrip(builder: Builder) {
                 SwipeableCalendarStrip.DisplayMode.DAYS,
                 SwipeableCalendarStrip.DisplayMode.DAYS_MONTHS -> {
                     calendar.add(Calendar.DATE, 1)
-                    itemList.add(CalendarStripItem(displayMode!!, calendar.time))
+                    itemList.add(CalendarStripItem(displayMode!!, calendar.clone() as Calendar))
                 }
                 SwipeableCalendarStrip.DisplayMode.MONTHS,
                 SwipeableCalendarStrip.DisplayMode.MONTHS_YEARS -> {
                     calendar.add(Calendar.MONTH, 1)
-                    itemList.add(CalendarStripItem(displayMode!!, calendar.time))
+                    itemList.add(CalendarStripItem(displayMode!!, calendar.clone() as Calendar))
                 }
             }
         }

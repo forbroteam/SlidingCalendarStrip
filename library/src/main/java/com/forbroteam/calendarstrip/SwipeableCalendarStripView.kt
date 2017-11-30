@@ -19,7 +19,7 @@ class SwipeableCalendarStripView : LinearLayout, ViewPager.OnPageChangeListener,
 
     lateinit var calendarStrip: SwipeableCalendarStrip
     private lateinit var viewPager: ViewPager
-    private lateinit var calendarStripAdapter: CalendarStripAdapter
+    private var calendarStripAdapter: CalendarStripAdapter? = null
     private var callbackAvailable = true
 
     constructor(context: Context) : this(context, null)
@@ -103,9 +103,10 @@ class SwipeableCalendarStripView : LinearLayout, ViewPager.OnPageChangeListener,
         }
 
         if (calendarStripAdapter == null) return -1
-        return (0..calendarStripAdapter.count).firstOrNull {
+
+        return (0 until calendarStripAdapter!!.count).firstOrNull {
             dateFormat.format(date) == dateFormat
-                    .format(calendarStripAdapter.items[it].getDate())
+                    .format(calendarStripAdapter!!.items[it].getDate())
         }
                 ?: -1
     }
@@ -114,9 +115,9 @@ class SwipeableCalendarStripView : LinearLayout, ViewPager.OnPageChangeListener,
         calendarStripAdapter = CalendarStripAdapter(context, items,
                 calendarStrip.typeface, calendarStrip.itemTextColor,
                 calendarStrip.itemTextSize)
-        calendarStripAdapter.clickListener = this
+        calendarStripAdapter!!.clickListener = this
         viewPager.adapter = calendarStripAdapter
-        viewPager.setCurrentItem(calendarStripAdapter.count, false)
+        viewPager.setCurrentItem(calendarStripAdapter!!.count, false)
     }
 
     override fun onPageScrollStateChanged(state: Int) {
@@ -132,8 +133,11 @@ class SwipeableCalendarStripView : LinearLayout, ViewPager.OnPageChangeListener,
         }
 
         calendarStrip.itemSelectionListener?.let {
-            it.onCalendarStripItemSelected(calendarStripAdapter.items[position].getValue(),
-                    calendarStripAdapter.items[position].getType())
+            calendarStripAdapter?.let {
+                calendarStrip.itemSelectionListener!!.onCalendarStripItemSelected(
+                        it.items[position].getValue(),
+                        it.items[position].getType())
+            }
         }
     }
 

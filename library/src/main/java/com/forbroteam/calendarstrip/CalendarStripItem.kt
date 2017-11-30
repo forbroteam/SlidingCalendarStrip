@@ -8,24 +8,32 @@ import java.util.*
  */
 
 data class CalendarStripItem(private val displayMode: SwipeableCalendarStrip.DisplayMode,
-                             private val date: Date) {
+                             private val calendar: Calendar) {
 
     fun getName(): String {
         return when (displayMode) {
-            SwipeableCalendarStrip.DisplayMode.DAYS -> SimpleDateFormat("EEE").format(date)
-            SwipeableCalendarStrip.DisplayMode.MONTHS -> SimpleDateFormat("MMM").format(date)
-            SwipeableCalendarStrip.DisplayMode.DAYS_MONTHS -> SimpleDateFormat("dd MMM").format(date)
-            SwipeableCalendarStrip.DisplayMode.MONTHS_YEARS -> SimpleDateFormat("MMM yy").format(date)
+            SwipeableCalendarStrip.DisplayMode.DAYS -> SimpleDateFormat("EEE").format(calendar.time)
+            SwipeableCalendarStrip.DisplayMode.MONTHS -> {
+                if (calendar.get(Calendar.MONTH) == 0) {
+                    SimpleDateFormat("MMM yyyy").format(calendar.time)
+                } else {
+                    SimpleDateFormat("MMM").format(calendar.time)
+                }
+            }
+            SwipeableCalendarStrip.DisplayMode.DAYS_MONTHS -> SimpleDateFormat("dd MMM")
+                    .format(calendar.time)
+            SwipeableCalendarStrip.DisplayMode.MONTHS_YEARS -> SimpleDateFormat("MMM yy")
+                    .format(calendar.time)
         }
     }
 
     fun getValue(): String {
-        date?.let {
-            return SimpleDateFormat("dd/MM/yyyy").format(it)
+        calendar?.let {
+            return SimpleDateFormat("dd/MM/yyyy").format(it.time)
         }
     }
 
     fun getType() = displayMode.toString()
 
-    fun getDate() = date
+    fun getDate() = calendar.time
 }
