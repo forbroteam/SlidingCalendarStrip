@@ -15,7 +15,7 @@ repositories {
 }
     
 dependencies {
-        implementation 'com.forbroteam:swipeable-calendar-strip-view:1.1.5'
+        implementation 'com.forbroteam:swipeable-calendar-strip-view:1.1.8'
 }
 ```
 
