@@ -11,18 +11,24 @@ data class CalendarStripItem(private val displayMode: SwipeableCalendarStrip.Dis
                              private val calendar: Calendar) {
 
     fun getName(): String {
-        return when (displayMode) {
-            SwipeableCalendarStrip.DisplayMode.DAYS -> SimpleDateFormat("EEE").format(calendar.time)
+        when (displayMode) {
+            SwipeableCalendarStrip.DisplayMode.DAYS ->
+                return SimpleDateFormat("EEE").format(calendar.time)
             SwipeableCalendarStrip.DisplayMode.MONTHS -> {
-                if (calendar.get(Calendar.MONTH) == 0) {
-                    SimpleDateFormat("MMM yyyy").format(calendar.time)
-                } else {
-                    SimpleDateFormat("MMM").format(calendar.time)
+                var monthName = SimpleDateFormat("MMM").format(calendar.time)
+                if (monthName.length > 5) {
+                    monthName = monthName.substring(0, 5)
                 }
+                if (calendar.get(Calendar.MONTH) == 0) {
+                    monthName = monthName.plus(" ${SimpleDateFormat("yyyy")
+                            .format(calendar.time)}")
+                }
+
+                return monthName
             }
-            SwipeableCalendarStrip.DisplayMode.DAYS_MONTHS -> SimpleDateFormat("dd MMM")
+            SwipeableCalendarStrip.DisplayMode.DAYS_MONTHS -> return SimpleDateFormat("dd MMM")
                     .format(calendar.time)
-            SwipeableCalendarStrip.DisplayMode.MONTHS_YEARS -> SimpleDateFormat("MMM yy")
+            SwipeableCalendarStrip.DisplayMode.MONTHS_YEARS -> return SimpleDateFormat("MMM yy")
                     .format(calendar.time)
         }
     }
