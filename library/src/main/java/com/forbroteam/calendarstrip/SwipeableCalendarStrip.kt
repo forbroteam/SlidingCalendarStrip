@@ -1,7 +1,9 @@
 package com.forbroteam.calendarstrip
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Typeface
+import android.os.Build
 import android.view.View
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
@@ -90,7 +92,7 @@ class SwipeableCalendarStrip(builder: Builder) {
                 itemCount = 7
             }
             displayMode ?: apply { displayMode = DisplayMode.DAYS_MONTHS }
-            locale ?: apply { locale = Locale("en") }
+            locale ?: apply { locale = getLocaleFromContext(rootView.context) }
         }
 
         fun itemCount(itemCount: Int): Builder {
@@ -121,6 +123,14 @@ class SwipeableCalendarStrip(builder: Builder) {
         fun locale(locale: Locale): Builder {
             this.locale = locale
             return this
+        }
+
+        private fun getLocaleFromContext(context: Context): Locale {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                context.resources.configuration.locales.get(0)
+            } else {
+                context.resources.configuration.locale
+            }
         }
     }
 
