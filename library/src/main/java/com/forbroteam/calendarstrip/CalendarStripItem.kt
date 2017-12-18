@@ -8,14 +8,14 @@ import java.util.*
  */
 
 data class CalendarStripItem(private val displayMode: SwipeableCalendarStrip.DisplayMode,
-                             private val calendar: Calendar) {
+                             private val calendar: Calendar, private val locale: Locale) {
 
     fun getName(): String {
         when (displayMode) {
             SwipeableCalendarStrip.DisplayMode.DAYS ->
-                return SimpleDateFormat("EEE").format(calendar.time)
+                return SimpleDateFormat("EEE", locale).format(calendar.time)
             SwipeableCalendarStrip.DisplayMode.MONTHS -> {
-                var monthName = SimpleDateFormat("MMM").format(calendar.time)
+                var monthName = SimpleDateFormat("MMM", locale).format(calendar.time)
                 if (monthName.length > 5) {
                     monthName = monthName.substring(0, 5)
                 }
@@ -26,9 +26,11 @@ data class CalendarStripItem(private val displayMode: SwipeableCalendarStrip.Dis
 
                 return monthName
             }
-            SwipeableCalendarStrip.DisplayMode.DAYS_MONTHS -> return SimpleDateFormat("dd MMM")
+            SwipeableCalendarStrip.DisplayMode.DAYS_MONTHS -> return SimpleDateFormat("dd MMM",
+                    locale)
                     .format(calendar.time)
-            SwipeableCalendarStrip.DisplayMode.MONTHS_YEARS -> return SimpleDateFormat("MMM yy")
+            SwipeableCalendarStrip.DisplayMode.MONTHS_YEARS -> return SimpleDateFormat("MMM yy",
+                    locale)
                     .format(calendar.time)
         }
     }

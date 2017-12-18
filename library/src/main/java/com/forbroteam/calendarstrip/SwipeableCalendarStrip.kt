@@ -27,6 +27,7 @@ class SwipeableCalendarStrip(builder: Builder) {
     var itemTextColor: Int = 0
     var itemTextSize: Int = 0
     private var displayMode: DisplayMode?
+    private var locale: Locale?
     var itemSelectionListener: SwipeableCalendarStripListener? = null
 
     init {
@@ -37,6 +38,7 @@ class SwipeableCalendarStrip(builder: Builder) {
         itemTextColor = builder.itemTextColor
         itemTextSize = builder.itemTextSize
         displayMode = builder.displayMode
+        locale = builder.locale
     }
 
     fun loadCalendarStrip() {
@@ -63,6 +65,7 @@ class SwipeableCalendarStrip(builder: Builder) {
         var itemTextColor: Int = 0
         var itemTextSize: Int = 0
         var displayMode: DisplayMode? = null
+        var locale: Locale? = null
 
         constructor(rootView: View, viewId: Int) {
             this.rootView = rootView
@@ -87,6 +90,7 @@ class SwipeableCalendarStrip(builder: Builder) {
                 itemCount = 7
             }
             displayMode ?: apply { displayMode = DisplayMode.DAYS_MONTHS }
+            locale ?: apply { locale = Locale("en") }
         }
 
         fun itemCount(itemCount: Int): Builder {
@@ -113,6 +117,11 @@ class SwipeableCalendarStrip(builder: Builder) {
             this.displayMode = displayMode
             return this
         }
+
+        fun locale(locale: Locale): Builder {
+            this.locale = locale
+            return this
+        }
     }
 
     private fun generateItems(): LinkedList<CalendarStripItem> {
@@ -132,12 +141,12 @@ class SwipeableCalendarStrip(builder: Builder) {
                 SwipeableCalendarStrip.DisplayMode.DAYS,
                 SwipeableCalendarStrip.DisplayMode.DAYS_MONTHS -> {
                     calendar.add(Calendar.DATE, 1)
-                    itemList.add(CalendarStripItem(displayMode!!, calendar.clone() as Calendar))
+                    itemList.add(CalendarStripItem(displayMode!!, calendar.clone() as Calendar, locale!!))
                 }
                 SwipeableCalendarStrip.DisplayMode.MONTHS,
                 SwipeableCalendarStrip.DisplayMode.MONTHS_YEARS -> {
                     calendar.add(Calendar.MONTH, 1)
-                    itemList.add(CalendarStripItem(displayMode!!, calendar.clone() as Calendar))
+                    itemList.add(CalendarStripItem(displayMode!!, calendar.clone() as Calendar, locale!!))
                 }
             }
         }
